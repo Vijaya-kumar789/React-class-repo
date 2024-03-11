@@ -1,0 +1,266 @@
+// App.jsx
+
+
+
+import "./App.css";
+import Card from "./Card";
+import "/node_modules/bootstrap/dist/css/bootstrap.css";
+function App() {
+  let data = [
+    {
+      planName: "Free",
+      price: 0,
+      features: [
+        {
+          name: "10 users included",
+          enabled : true
+        },
+        {
+          name: "2 GB of storage",
+          enabled : true
+        },
+        {
+          name: "Email support",
+          enabled : false
+        },
+        {
+          name: "Help center access",
+          enabled : false
+        },
+      ],
+    },
+    {
+      planName: "Pro",
+      price: 15,
+      features: [
+        {
+          name: "20 users included",
+          enabled : true
+        },
+        {
+          name: "5 GB of storage",
+          enabled : true
+        },
+        {
+          name: "Priority email support",
+          enabled : true
+        },
+        {
+          name: "Help center access",
+          enabled : false
+        },
+      ],
+      buttonFocus : true
+    },
+    {
+      planName: "Enterprise",
+      price: 29,
+      features: [
+        {
+          name: "30 users included",
+          enabled : true
+        },
+        {
+          name: "15 GB of storage",
+          enabled : true
+        },
+        {
+          name: "Phone and email support",
+          enabled : true
+        },
+        {
+          name: "Help center access",
+          enabled : true
+        },
+      ],
+      buttonFocus : true,
+      boxFocus : true
+    },
+  ];
+  return (
+    <div className="container">
+      <div className="row">
+        {data.map((item, index) => {
+          return <Card item={item} key={index} />;
+        })}
+      </div>
+    </div>
+  );
+}
+
+export default App;
+
+
+// card.jsx
+
+
+import { TiTick } from "react-icons/ti";
+import { ImCross } from "react-icons/im";
+
+Card.propTypes = {
+  item: {},
+};
+
+function Card({ item }) {
+  return (
+    <div className="col">
+      <div
+        className={`card mb-4 rounded-3 shadow-sm ${
+          item.boxFocus ? "border-primary" : ""
+        }`}
+      >
+        <div
+          className={`text-center card-header py-3 ${
+            item.boxFocus ? "text-bg-primary border-primary" : ""
+          } `}
+        >
+          <h4 className="my-0 fw-normal">{item.planName}</h4>
+        </div>
+        <div className="card-body">
+          <h1 className="card-title pricing-card-title">
+            ${item.price}
+            <small className="text-body-secondary fw-light">/mo</small>
+          </h1>
+          <ul className="list-unstyled mt-3 mb-4">
+            {item.features.map((feature, index) => {
+              return (
+                <li key={index}>
+                  {feature.enabled ? (
+                    <span>
+                      <TiTick />
+                      {feature.name}
+                    </span>
+                  ) : (
+                    <>
+                      <ImCross size={9} />
+                      <del>{feature.name}</del>
+                    </>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+          <button
+            type="button"
+            className={`w-100 btn btn-lg ${
+              item.buttonFocus ? "btn-primary" : "btn-outline-primary"
+            }`}
+          >
+            Sign up for free
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default Card;
+
+
+///
+////
+////
+
+
+react state method
+
+
+import { useState } from "react";
+import "./App.css";
+import "/node_modules/bootstrap/dist/css/bootstrap.css";
+function App() {
+  const [onOff, setOnOff] = useState(true);
+  const [color, setColor] = useState("wheat");
+  const [opacity, setOpacity] = useState(100);
+  return (
+    <div className="container">
+      <div className="row">
+        <div className="col-lg-6">
+          <div
+            style={{
+              height: 200,
+              width: 200,
+              backgroundColor: `${onOff ? color : ""}`,
+              borderRadius: 100,
+              opacity: opacity / 100,
+            }}
+          ></div>
+        </div>
+        <div className="col-lg-6">
+          <div className="row">
+            <div
+              onClick={() => {
+                setColor("red");
+              }}
+              style={{
+                width: 25,
+                height: 25,
+                backgroundColor: "red",
+                borderRadius: 100,
+              }}
+            ></div>
+            <div
+              onClick={() => {
+                setColor("orange");
+              }}
+              style={{
+                width: 25,
+                height: 25,
+                backgroundColor: "orange",
+                borderRadius: 100,
+              }}
+            ></div>
+            <div
+              onClick={() => {
+                setColor("blue");
+              }}
+              style={{
+                width: 25,
+                height: 25,
+                backgroundColor: "blue",
+                borderRadius: 100,
+              }}
+            ></div>
+            <div
+              onClick={() => {
+                setColor("green");
+              }}
+              style={{
+                width: 25,
+                height: 25,
+                backgroundColor: "green",
+                borderRadius: 100,
+              }}
+            ></div>
+            <div>
+              <input
+                type="range"
+                min="1"
+                max="100"
+                value={opacity}
+                onChange={(e) => {
+                  console.log(e)
+                  setOpacity(e.target.value)
+                }}
+              />
+              {opacity}
+            </div>
+            <div>
+              <button
+                onClick={() => {
+                  setOnOff(!onOff);
+                }}
+              >
+                {onOff ? "Off" : "On"}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default App;
+
+
